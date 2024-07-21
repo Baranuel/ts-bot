@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@types/sound-play':
+        specifier: ^1.1.3
+        version: 1.1.3
       puppeteer:
         specifier: ^22.13.1
         version: 22.13.1
@@ -20,6 +23,9 @@ importers:
       puppeteer-extra-plugin-stealth:
         specifier: ^2.11.2
         version: 2.11.2(puppeteer-extra@3.3.6(puppeteer-core@22.13.1)(puppeteer@22.13.1))
+      sound-play:
+        specifier: ^1.1.0
+        version: 1.1.0
 
 packages:
 
@@ -51,6 +57,9 @@ packages:
 
   '@types/node@20.14.11':
     resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
+
+  '@types/sound-play@1.1.3':
+    resolution: {integrity: sha512-eHS9nWr3MghTVpyOlEUxG3OpGwwWwVD2T++dqtHXWEjle+qqp3Zl2SJIf2a70fN0VKL+stre7+CVKVibEtnbkQ==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -545,6 +554,9 @@ packages:
     resolution: {integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
+  sound-play@1.1.0:
+    resolution: {integrity: sha512-Bd/L0AoCwITFeOnpNLMsfPXrV5GG5NhrC/T6odveahYbhPZkdTnrFXRia9FCC5WBWdUTw1d+yvLBvi4wnD1xOA==}
+
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
@@ -672,7 +684,10 @@ snapshots:
   '@types/node@20.14.11':
     dependencies:
       undici-types: 5.26.5
-    optional: true
+
+  '@types/sound-play@1.1.3':
+    dependencies:
+      '@types/node': 20.14.11
 
   '@types/yauzl@2.10.3':
     dependencies:
@@ -1180,6 +1195,8 @@ snapshots:
       ip-address: 9.0.5
       smart-buffer: 4.2.0
 
+  sound-play@1.1.0: {}
+
   source-map@0.6.1:
     optional: true
 
@@ -1234,8 +1251,7 @@ snapshots:
       buffer: 5.7.1
       through: 2.3.8
 
-  undici-types@5.26.5:
-    optional: true
+  undici-types@5.26.5: {}
 
   universalify@2.0.1: {}
 
