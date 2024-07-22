@@ -29,15 +29,15 @@ const scrollElementToView = async (element) => {
 
 const selectTicket = async () => {
   sound.play(pathToHorn) // play horn when ticket was found
-    const ticket = await page.$(".EventEntry");
-    console.log("Ticket: ", ticket);
-    const numberOfTickets = await page.$(".NumberOfTicketsInOffer");
-    
-    if (!ticket) {
-      console.log("No tickets can be selected");
-      return setTimeout(reload, 5000);
-    }
-    const numberOfTicketsValue = await page.evaluate((ticket) => ticket.textContent, ticket)
+  const ticket = await page.$(".EventEntry");
+  console.log("Ticket: ", ticket);
+  const numberOfTickets = await page.$(".NumberOfTicketsInOffer");
+  
+  if (!ticket) {
+    console.log("No tickets can be selected");
+    return setTimeout(reload, 5000);
+  }
+    const numberOfTicketsValue = await page.evaluate((ticket) => ticket.textContent, numberOfTickets)
     console.log("Number of tickets available: ", numberOfTicketsValue);
     await ticket.click();
     await page.waitForNavigation();
@@ -65,8 +65,9 @@ const reload = async () => {
         console.log("No tickets available");
         return setTimeout(reload, REFRESH_INTERVAL);
     }
+
    await page.screenshot({ path: `screenshot${Math.random()}.png` }); 
-    await selectTicket();
+   await selectTicket();
 
   } catch (error) {
     console.log("Error: ", error);
