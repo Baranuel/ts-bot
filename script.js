@@ -11,7 +11,7 @@ puppeteer.use(StealthPlugin);
 
 
 
-const fanSale = "https://www.fansale.at/tickets/all/taylor-swift/502069/17275983";
+const fanSale = "https://www.fansale.at/tickets/all/taylor-swift/502069/17335909";
 const REFRESH_INTERVAL = 5000;
 const pathToHorn = path.join(import.meta.dirname, 'horn.mp3')
 const browser = await puppeteer.launch({
@@ -28,14 +28,15 @@ const scrollElementToView = async (element) => {
 };
 
 const selectTicket = async () => {
+  sound.play(pathToHorn) // play horn when ticket was found
     const ticket = await page.$(".EventEntry");
+    console.log("Ticket: ", ticket);
     const numberOfTickets = await page.$(".NumberOfTicketsInOffer");
     
     if (!ticket) {
       console.log("No tickets can be selected");
       return setTimeout(reload, 5000);
     }
-    sound.play(pathToHorn) // play horn when ticket was found
     const numberOfTicketsValue = await page.evaluate((ticket) => ticket.textContent, ticket)
     console.log("Number of tickets available: ", numberOfTicketsValue);
     await ticket.click();
@@ -69,7 +70,6 @@ const reload = async () => {
 
   } catch (error) {
     console.log("Error: ", error);
-    setTimeout(reload, REFRESH_INTERVAL);
   }
 };
 reload();
