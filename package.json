@@ -16,6 +16,10 @@
     "puppeteer-core": "^22.13.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "sound-play": "^1.1.0"
+    "sound-play": "^1.1.0",
+    "user-agents": "^1.1.274"
+  },
+  "devDependencies": {
+    "@types/user-agents": "^1.0.4"
   }
 }
