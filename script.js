@@ -17,11 +17,10 @@ const StealthPlugin = plugin({
   ],
 });
 puppeteer.use(StealthPlugin);
-console.log(StealthPlugin.enabledEvasions);
 
 const fanSale =
   "https://www.fansale.at/tickets/all/taylor-swift/502069/17275983";
-const REFRESH_INTERVAL = 5000;
+const REFRESH_INTERVAL = 10000;
 const pathToHorn = path.join(import.meta.dirname, "notify.mp3");
 const browser = await puppeteer.launch({
   channel: "chrome",
@@ -53,7 +52,7 @@ async function acceptCookies() {
   try {
     await cookiesButton.click();
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Error in cookies: ", error);
   }
 }
 
@@ -87,7 +86,7 @@ const selectTicket = async () => {
     await page.waitForNavigation();
     await page.click("ZUR KASSE");
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Error in ticket selector: ", error);
   }
 };
 
@@ -111,7 +110,7 @@ const reload = async () => {
     await page.screenshot({ path: `screenshot${Math.random()}.png` });
     await selectTicket();
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Error in reload: ", error);
   }
 };
 reload();
