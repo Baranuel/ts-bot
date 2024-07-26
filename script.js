@@ -37,7 +37,6 @@ const scrollElementToView = async (element) => {
 };
 
 const reloadPageAfterSelection = async () => {
-  sound.play(pathToHorn);
   await page.reload();
 };
 
@@ -75,6 +74,7 @@ const clickVisibleTicket = async () => {
 };
 
 const selectTicket = async () => {
+  sound.play(pathToHorn);
   const ticket = await page.$(".EventEntry");
   const ticketIcon = await page.$(".TicketcheckIcon");
   const numberOfTickets = await page.$(".NumberOfTicketsInOffer");
@@ -91,7 +91,7 @@ const selectTicket = async () => {
 
   try {
     const ticketWasClicked = await clickVisibleTicket();
-    
+    console.log("Ticket was clicked: ", ticketWasClicked);
     if (!ticketWasClicked) {
       await reloadPageAfterSelection();
       await clickVisibleTicket();

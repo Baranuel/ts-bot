@@ -77,6 +77,10 @@ const reloadPage = async () => {
         await page.reload()
 
         const availableTextElement = await page.evaluateHandle('document.querySelector("#componentLoader-id1 > div:nth-child(4) > div > article > div > div.col-xs-9.col-sm-9.col-md-10.event-listing-info-wrapper > div > div.col-sm-4.col-md-3.event-listing-buy.margin-right-xs.hidden-xs.js-event-listing-buy > span > span.theme-text-marginal-color")')
+        if(!availableTextElement) {
+            console.log("Not available yet")
+            return setTimeout(reloadPage, REFRESH_INTERVAL)
+        }
         const availableText = await page.evaluate((element) => element.innerText, availableTextElement)
         const isAvailable = !availableText.includes("nicht verfügbar")
 
