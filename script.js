@@ -25,6 +25,8 @@ const pathToHorn = path.join(import.meta.dirname, "notify.mp3");
 const browser = await puppeteer.launch({
   channel: "chrome",
   headless: false,
+  browserWSEndpoint:
+    "wss://brd-customer-hl_67d82a75-zone-scraping_browser1:gvplfcdeqea7@brd.superproxy.io:9222",
 });
 const page = (await browser.pages())[0];
 await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
@@ -56,11 +58,20 @@ async function acceptCookies() {
   }
 }
 
-const clickVisibleTicket = async (ticket) => {
-  const isVisible = await ticket.isVisible();
-  const isIntersecting = await ticket.isIntersectingViewport();
-  console.log("clicking the ticket", ticket);
-  isVisible && isIntersecting && (await ticket.click());
+const clickVisibleTicket = async () => {
+  try {
+    const ticket = await page.$(".EventEntry");
+    if (!ticket) throw new Error("No tickets available");
+
+    const isVisible = await ticket.isVisible();
+    const isIntersecting = await ticket.isIntersectingViewport();
+    console.log("clicking the ticket", ticket);
+    isVisible && isIntersecting && (await ticket.click());
+    return true 
+  } catch (error) {
+    console.log("Error in clickVisibleTicket: ", error);
+    return false
+  }
 };
 
 const selectTicket = async () => {
@@ -79,9 +90,12 @@ const selectTicket = async () => {
   console.log("Number of tickets available: ", numberOfTicketsValue);
 
   try {
-    await clickVisibleTicket(ticket);
-    await reloadPageAfterSelection();
-    await clickVisibleTicket(ticket);
+    const ticketWasClicked = await clickVisibleTicket();
+    
+    if (!ticketWasClicked) {
+      await reloadPageAfterSelection();
+      await clickVisibleTicket();
+    }
 
     await page.waitForNavigation();
     await page.click("ZUR KASSE");
@@ -106,7 +120,6 @@ const reload = async () => {
 
     if (!element) return setTimeout(reload, REFRESH_INTERVAL); // no Tickets
 
-    await scrollElementToView(element);
     await page.screenshot({ path: `screenshot${Math.random()}.png` });
     await selectTicket();
   } catch (error) {

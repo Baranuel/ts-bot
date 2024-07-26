@@ -26,7 +26,9 @@ const pathToHorn = path.join(import.meta.dirname, "notify.mp3");
 const browser = await puppeteer.launch({
   channel: "chrome",
   headless: false,
+  browserWSEndpoint: "wss://brd-customer-hl_67d82a75-zone-scraping_browser1:gvplfcdeqea7@brd.superproxy.io:9222",
 });
+
 const page = (await browser.pages())[0];
 await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
 await page.goto(fanSale);
@@ -73,12 +75,10 @@ const inputPromotionCode = async () => {
 const reloadPage = async () => {
     try {
         await page.reload()
-        
+
         const availableTextElement = await page.evaluateHandle('document.querySelector("#componentLoader-id1 > div:nth-child(4) > div > article > div > div.col-xs-9.col-sm-9.col-md-10.event-listing-info-wrapper > div > div.col-sm-4.col-md-3.event-listing-buy.margin-right-xs.hidden-xs.js-event-listing-buy > span > span.theme-text-marginal-color")')
         const availableText = await page.evaluate((element) => element.innerText, availableTextElement)
         const isAvailable = !availableText.includes("nicht verfügbar")
-
-        await page.evaluate(el => el.scrollIntoView(), availableTextElement)
 
         if(!isAvailable) {
             console.log("Not available yet")
